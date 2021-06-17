@@ -1,0 +1,7 @@
+name "telega-dispatcher"
+description "Addon to telega"
+authors "tynuk"
+copyright "Copyright © 2021, tynuk"
+license "MIT"
+targetType "library"
+dependency "telega" version="~>0.2.0"

@@ -1,0 +1,14 @@
+{
+	"authors": [
+		"tynuk"
+	],
+	"copyright": "Copyright © 2021, tynuk",
+	"dependencies": {
+		"telega-dispatcher":{
+            "path":"../../"
+        }
+	},
+	"description": "A simple test bot",
+	"license": "proprietary",
+	"name": "testbot"
+}

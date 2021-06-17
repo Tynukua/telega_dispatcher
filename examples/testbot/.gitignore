@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/testbot
+testbot.so
+testbot.dylib
+testbot.dll
+testbot.a
+testbot.lib
+testbot-test-*
+*.exe
+*.o
+*.obj
+*.lst

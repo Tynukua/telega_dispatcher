@@ -1,4 +1,4 @@
-module telega.dispatcher.filters;
+module telega_dispatcher.filters;
 
 import telega.telegram.basic:Update,Message;
 

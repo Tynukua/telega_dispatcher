@@ -1,4 +1,4 @@
-module telega.dispatcher;
+module telega_dispatcher;
 
 import std.typecons;
 
@@ -6,7 +6,7 @@ import telega:BotApi;
 import telega.telegram.basic:Update,Message;
 
 
-public import telega.dispatcher.filters;
+public import telega_dispatcher.filters;
 class Dispatcher{
     BotApi bot;
     this(BotApi bot){

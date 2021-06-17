@@ -1,0 +1,16 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/telega-dispatcher
+telega-dispatcher.so
+telega-dispatcher.dylib
+telega-dispatcher.dll
+libtelega-dispatcher.a
+telega-dispatcher.a
+telega-dispatcher.lib
+telega-dispatcher-test-*
+*.exe
+*.o
+*.obj
+*.lst
