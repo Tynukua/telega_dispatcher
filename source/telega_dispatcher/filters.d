@@ -1,6 +1,7 @@
 module telega_dispatcher.filters;
 
-import telega.telegram.basic:Update,Message;
+import std.meta:Alias;
+import telega.telegram.basic;
 
 interface Filter(T){
     bool check(T);
@@ -26,7 +27,40 @@ class TextFilter: MessageFilter, EditedMessageFilter{
 
 }
 
+class CommandFilter: MessageFilter{
+    string[] cmds;
+    this(string[] commands ...)
+    {
+        this.cmds = commands;
+    }
+    bool check(Message m){
+        if(!m.entities.isNull){
+            foreach(MessageEntity e; m.entities.get){
+                if(e.type == MessageEntityType.BotCommand)
+                {   
+                    
+                    const auto CMDSTART = (e.offset+1);
+                    const auto CMDEND   = (e.offset + e.length);
 
+                    ulong cmdEnd(){
+                        ulong cmdEnd = 0;
+                        foreach (l;m.text.get[CMDSTART..CMDEND]){
+                            if(l == '@')
+                                return cmdEnd;
+                            cmdEnd++;
+                        }              
+                        return cmdEnd;      
+                    }
+                    auto cmdText = m.text.get[CMDSTART..cmdEnd+1];
+                    import std.algorithm.searching:canFind;
+                    if(cmds.canFind(cmdText))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+}
 
 
 

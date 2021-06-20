@@ -4,7 +4,7 @@ import std.process : environment;
 import std.exception : enforce;
 import telega.botapi:BotApi;
 import telega.telegram.basic:Message;
-import telega_dispatcher:Dispatcher,TextFilter,EditedMessageFilter;
+import telega_dispatcher:Dispatcher,TextFilter,EditedMessageFilter,CommandFilter;
 import telega.telegram.basic : Update, getUpdates, sendMessage;
 int main(string[] args)
 {
@@ -32,6 +32,12 @@ int main(string[] args)
         }] = (Message m){
                 bot.sendMessage(m.chat.id, "new text: "~m.text);
         };
+    dp.messageHandlers[new CommandFilter("start", "help")] = (Message m){
+        bot.sendMessage(m.chat.id, 
+                "Hi! I'm test bot for displaing telega_dispatcher!");
+    }
+    ;
+
     runTask(&dp.runPolling);
     disableDefaultSignalHandlers();
 
