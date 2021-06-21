@@ -2,6 +2,7 @@ module telega_dispatcher.filters;
 
 import std.meta:Alias;
 import telega.telegram.basic;
+import telega.telegram.inline;
 
 interface Filter(T){
     bool check(T);
@@ -10,8 +11,11 @@ interface Filter(T){
 //alias UpdateFilter = Filter!Update;
 alias MessageFilter = Filter!Message;
 interface EditedMessageFilter: MessageFilter{};
+alias InlineQueryFilter = Filter!InlineQuery;
+//alias ChosenInlineResultFilter = Filter!ChosenInlineResult;
+alias CallbackQueryFilter = Filter!CallbackQuery;
 
-class TextFilter: MessageFilter, EditedMessageFilter{
+class TextFilter: MessageFilter, EditedMessageFilter, CallbackQueryFilter{
     string text;
     this(string text){
         this.text = text;
@@ -23,6 +27,9 @@ class TextFilter: MessageFilter, EditedMessageFilter{
             }
         }
         return false;
+    }
+    bool check(CallbackQuery c){
+        return (c.data == text);
     }
 
 }

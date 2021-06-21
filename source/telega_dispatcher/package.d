@@ -14,6 +14,9 @@ class Dispatcher{
     }
     void delegate(Message)[MessageFilter] messageHandlers;
     void delegate(Message)[EditedMessageFilter] editedMessageHandlers;
+    void delegate(Message)[MessageFilter] postHandlers;
+    void delegate(Message)[EditedMessageFilter] editedPostHandlers;
+
     void runPolling(){
         import telega.telegram.basic : Update, getUpdates, sendMessage;
         import std.algorithm.iteration : filter, each;
@@ -25,8 +28,10 @@ class Dispatcher{
                 .each!((Update u) {
                     offset = max(offset, u.id) + 1;
                     static foreach(updateFieldName,handlerContainerName; [
-                        "message":"messageHandlers",
-                        "edited_message":"editedMessageHandlers"]){
+                        "message":          "messageHandlers",
+                        "edited_message":   "editedMessageHandlers",
+                        "post":             "postHandlers",
+                        "edited_post":      "editedPostHandlers"]){
                             {
                                 auto updateField = __traits(
                                         getMember, u, updateFieldName);
