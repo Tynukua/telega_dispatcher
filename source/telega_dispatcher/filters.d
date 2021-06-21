@@ -34,6 +34,21 @@ class TextFilter: MessageFilter, EditedMessageFilter, CallbackQueryFilter{
 
 }
 
+class RegexFilter: MessageFilter,EditedMessageFilter,CallbackQueryFilter{
+    import std.regex;
+    Regex!char regexp;
+    // TODO: matchCache
+    this(string regexp){
+       this.regexp = regex(regexp );
+    }
+    bool check(Message m){
+        return !(matchFirst(m.text.get, regexp).empty) ;      
+    }
+    bool check(CallbackQuery c){
+        return !(matchFirst(c.data, regexp).empty) ;      
+    }
+}
+
 class CommandFilter: MessageFilter{
     string[] cmds;
     this(string[] commands ...)
