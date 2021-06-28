@@ -21,8 +21,8 @@ int main(string[] args)
     auto bot = new BotApi(botToken);
     auto dp = new Dispatcher(bot);
     // using of ready filter
-    dp.messageHandlers[new TextFilter("ping")] = (Message m){
-            bot.sendMessage(m.chat.id,"Pong!!!");
+    dp.messageHandlers[new TextFilter("ping") | new TextFilter("pong")] = (Message m){
+            bot.sendMessage(m.chat.id,"PingPong!!!");
         };
     // creating of costum filter
     dp.editedMessageHandlers[new class EditedMessageFilter{

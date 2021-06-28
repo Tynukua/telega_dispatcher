@@ -6,6 +6,14 @@ import telega.telegram.inline;
 
 interface Filter(T){
     bool check(T);
+    Filter!T opBinary(string op)(Filter!T b ){
+        auto a = this;
+        return new class Filter!T{
+            bool check(T u){
+                return mixin(`a.check(u)` ~ op ~op~  `b.check(u)`);
+            }
+        };
+    }
 }
 
 //alias UpdateFilter = Filter!Update;
@@ -83,7 +91,4 @@ class CommandFilter: MessageFilter{
         return false;
     }
 }
-
-
-
 
