@@ -27,11 +27,12 @@ class Dispatcher{
             bot.getUpdates(offset)
                 .each!((Update u) {
                     offset = max(offset, u.id) + 1;
+                    
                     static foreach(updateFieldName,handlerContainerName; [
                         "message":          "messageHandlers",
                         "edited_message":   "editedMessageHandlers",
-                        "post":             "postHandlers",
-                        "edited_post":      "editedPostHandlers"]){
+                        "channel_post":             "postHandlers",
+                        "edited_channel_post":      "editedPostHandlers"]){
                             {
                                 auto updateField = __traits(
                                         getMember, u, updateFieldName);
