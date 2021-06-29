@@ -27,30 +27,32 @@ class Dispatcher{
             bot.getUpdates(offset)
                 .each!((Update u) {
                     offset = max(offset, u.id) + 1;
-                    
-                    static foreach(updateFieldName,handlerContainerName; [
-                        "message":          "messageHandlers",
-                        "edited_message":   "editedMessageHandlers",
-                        "channel_post":             "postHandlers",
-                        "edited_channel_post":      "editedPostHandlers"]){
-                            {
-                                auto updateField = __traits(
-                                        getMember, u, updateFieldName);
-                                auto handlerContainer = __traits(
-                                        getMember, this, handlerContainerName);
-                                if(!updateField.isNull){
-                                    foreach(filter,handler; handlerContainer){
-                                        if (filter.check(updateField)){
-                                            handler(updateField.get);
-                                            return;
-                                            }
-                                    }
-                                }
-                            }
-                        }
+                    runUpdate(u);
                 });
         }
     
-    }        
+    } 
+    void runUpdate(Update u){
+         static foreach(updateFieldName,handlerContainerName; [
+             "message":          "messageHandlers",
+             "edited_message":   "editedMessageHandlers",
+             "channel_post":             "postHandlers",
+             "edited_channel_post":      "editedPostHandlers"]){
+                 {
+                     auto updateField = __traits(
+                             getMember, u, updateFieldName);
+                     auto handlerContainer = __traits(
+                             getMember, this, handlerContainerName);
+                     if(!updateField.isNull){
+                         foreach(filter,handler; handlerContainer){
+                             if (filter.check(updateField)){
+                                 handler(updateField.get);
+                                 return;
+                                 }
+                         }
+                     }
+                 }
+             }
+    }    
             
 }
