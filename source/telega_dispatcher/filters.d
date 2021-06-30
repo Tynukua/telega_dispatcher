@@ -7,6 +7,7 @@ import telega.telegram.inline;
 interface Filter(T){
     bool check(T);
     Filter!T opBinary(string op)(Filter!T b ){
+        static assert(op in ["|", "&"]);
         auto a = this;
         return new class Filter!T{
             bool check(T u){
