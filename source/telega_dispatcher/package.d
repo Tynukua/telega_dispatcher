@@ -46,7 +46,7 @@ class Dispatcher{
                              getMember, this, handlerContainerName);
                      if(!updateField.isNull){
                          foreach(filter,handler; handlerContainer){
-                             if (filter.check(updateField)){
+                             if (filter.check(updateField.get)){
                                  handler(updateField.get);
                                  return;
                                  }

@@ -4,7 +4,7 @@ import std.process : environment;
 import std.exception : enforce;
 import telega.botapi:BotApi;
 import telega.telegram.basic:Message;
-import telega_dispatcher:Dispatcher,TextFilter,EditedMessageFilter,CommandFilter;
+import telega_dispatcher:Dispatcher,TextFilter,EditedMessageFilter,CommandFilter,RegexFilter;
 import telega.telegram.basic : Update, getUpdates, sendMessage;
 int main(string[] args)
 {
@@ -21,7 +21,8 @@ int main(string[] args)
     auto bot = new BotApi(botToken);
     auto dp = new Dispatcher(bot);
     // using of ready filter
-    dp.messageHandlers[new TextFilter("ping") | new TextFilter("pong")] = (Message m){
+    auto pingNotPong = new RegexFilter("ping") & ~ new RegexFilter("pong");
+    dp.messageHandlers[pingNotPong] = (Message m){
             bot.sendMessage(m.chat.id,"PingPong!!!");
         };
     // creating of costum filter
