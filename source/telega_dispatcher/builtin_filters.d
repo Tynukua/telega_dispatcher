@@ -31,6 +31,7 @@ class RegexFilter: MessageFilter,EditedMessageFilter,CallbackQueryFilter{
        this.regexp = regex(regexp );
     }
     bool check(Message m){
+        if (m.text.isNull) return false;
         return !(matchFirst(m.text.get, regexp).empty) ;      
     }
     bool check(CallbackQuery c){
