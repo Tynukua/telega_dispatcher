@@ -7,6 +7,7 @@ import telega.telegram.basic:Update,Message;
 
 
 public import telega_dispatcher.filters;
+public import telega_dispatcher.builtin_filters;
 class Dispatcher{
     BotApi bot;
     this(BotApi bot){
