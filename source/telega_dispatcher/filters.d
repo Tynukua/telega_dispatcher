@@ -30,7 +30,6 @@ interface Filter(T){
 
 //alias UpdateFilter = Filter!Update;
 alias MessageFilter = Filter!Message;
-interface EditedMessageFilter: MessageFilter{};
 alias InlineQueryFilter = Filter!InlineQuery;
 //alias ChosenInlineResultFilter = Filter!ChosenInlineResult;
 alias CallbackQueryFilter = Filter!CallbackQuery;

@@ -4,7 +4,17 @@ import telega;
 
 import telega_dispatcher.filters;
 
-class TextFilter: MessageFilter, EditedMessageFilter, CallbackQueryFilter{
+class FunctionFilter(T, FilterType = Filter!T):FilterType{
+    bool delegate(T) func;
+    this(bool delegate(T) _func){
+        func = _func;
+    }
+    bool check(T u){
+        return func(u);
+    }
+}
+
+class TextFilter: MessageFilter, CallbackQueryFilter{
     string text;
     this(string text){
         this.text = text;
@@ -20,10 +30,17 @@ class TextFilter: MessageFilter, EditedMessageFilter, CallbackQueryFilter{
     bool check(CallbackQuery c){
         return (c.data == text);
     }
+    unittest{
+        auto filter = new TextFilter("qwerty");
+        telega.Message msg;
+        msg.text = "qwerty";
+        assert(filter.check(msg));
+
+    }
 
 }
 
-class RegexFilter: MessageFilter,EditedMessageFilter,CallbackQueryFilter{
+class RegexFilter: MessageFilter, CallbackQueryFilter{
     import std.regex;
     Regex!char regexp;
     // TODO: matchCache
