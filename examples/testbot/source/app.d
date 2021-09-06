@@ -30,7 +30,7 @@ int main(string[] args)
                 return ! m.text.isNull;
             }
         }] = (Message m){
-                bot.sendMessage(m.chat.id, "new text: "~m.text);
+                bot.sendMessage(m.chat.id, "new text: "~m.text.get);
         };
     dp.messageHandlers[new CommandFilter("start", "help")] = (Message m){
         bot.sendMessage(m.chat.id, 

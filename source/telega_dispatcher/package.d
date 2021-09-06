@@ -30,8 +30,7 @@ class Dispatcher{
                     static foreach(updateFieldName,handlerContainerName; [
                         "message":          "messageHandlers",
                         "edited_message":   "editedMessageHandlers",
-                        "post":             "postHandlers",
-                        "edited_post":      "editedPostHandlers"]){
+                        ]){
                             {
                                 auto updateField = __traits(
                                         getMember, u, updateFieldName);
@@ -39,7 +38,7 @@ class Dispatcher{
                                         getMember, this, handlerContainerName);
                                 if(!updateField.isNull){
                                     foreach(filter,handler; handlerContainer){
-                                        if (filter.check(updateField)){
+                                        if (filter.check(updateField.get)){
                                             handler(updateField.get);
                                             return;
                                             }
